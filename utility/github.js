@@ -1,4 +1,5 @@
 // define some exports that are commonly used (project id, status id's etc)
+const fs = require('node:fs');
 
 const memoize = fn => new Proxy(fn, {
     cache: new Map(),
@@ -103,6 +104,7 @@ const getStatusFields = async (owner, repo, projectId) => {
         nodes {
           __typename
           ... on ProjectV2SingleSelectField {
+            id
             name
             options {
               id
@@ -121,7 +123,7 @@ const getStatusFields = async (owner, repo, projectId) => {
     // filter for "Status" field
     const statusField = projectResponse.node.fields.nodes.find(f => f.name === "Status");
 
-    return statusField.options;
+    return statusField;
 }
 
 const addIssueToProject = async (owner, repo, projectName, issueNodeId) => {
@@ -150,33 +152,43 @@ const addIssueToProject = async (owner, repo, projectName, issueNodeId) => {
 const setIssueState = async (owner, repo, projectName, itemId, state) => {
     const octokit = await getOctokit();
 
-    const {project, fields} = await getProjectInformation(owner, repo, projectName);
+    const { project, fields } = await getProjectInformation(owner, repo, projectName);
 
-    console.log(fields);
-    
-    const statusField = fields.find(f => f.name === state);
+    // Find the field that matches the desired state
+    const stateField = fields.options.find(f => f.name.toLowerCase() === state.toLowerCase());
+    if (!stateField) {
+        throw new Error(`State "${state}" not found in project ${projectName}`);
+    }
 
-    // Set the status to "Ready"
     await octokit.graphql(`
-        mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $value: String!) {
-            updateProjectV2ItemFieldValue(input: {
-                projectId: $projectId,
-                itemId: $itemId,
-                fieldId: $fieldId,
-                value: { text: $value }
-            }) {
-                projectV2Item {
-                    id
-                }
+        mutation changeStatus(
+          $field: ID!
+          $item: ID!
+          $project: ID!
+          $value: ProjectV2FieldValue!
+        ) {
+          updateProjectV2ItemFieldValue(
+            input: {
+              fieldId: $field
+              itemId: $item
+              projectId: $project
+              value: $value
             }
+          ) {
+            clientMutationId
+            projectV2Item {
+              id
+            }
+          }
         }
     `, {
-        projectId: project.id,
-        itemId: itemId,
-        fieldId: statusField.id,
-        value: state
+        project: project.id,
+        item: itemId,
+        field: fields.id,
+        value: {singleSelectOptionId: stateField.id}
     });
-}
+};
+
 
 // Export states and functions
 module.exports = { ProjectStates, createIssue, addIssueComment, getIssueCommentByReference, addIssueToProject, setIssueState };
