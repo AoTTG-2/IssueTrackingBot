@@ -1,0 +1,30 @@
+{
+  "name": "issuetrackingbot",
+  "version": "1.0.0",
+  "description": "A bot to track issues between github and discord threads",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AoTTG-2/IssueTrackingBot.git"
+  },
+  "keywords": [
+    "aottg2"
+  ],
+  "author": "AutumnThyme",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AoTTG-2/IssueTrackingBot/issues"
+  },
+  "homepage": "https://github.com/AoTTG-2/IssueTrackingBot#readme",
+  "dependencies": {
+    "@octokit/rest": "^21.0.2",
+    "discord.js": "^14.16.2",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "eslint": "^9.10.0"
+  }
+}
