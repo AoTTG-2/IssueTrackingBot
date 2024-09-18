@@ -12,7 +12,7 @@ const createServer = client => {
         // Log request body to a unique file name prefixed with "github-webhook-"
         res.status(202).send('Accepted');
         
-        const githubEvent = request.headers['x-github-event'];
+        const githubEvent = req.headers['x-github-event'];
         const fileName = `github-webhook-${githubEvent}-${Date.now()}.json`;
         fs.writeFileSync(fileName, JSON.stringify(req.body, null, 4));
     })
