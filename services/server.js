@@ -1,6 +1,7 @@
 const express = require('express');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const fs = require('fs');
+const path = require('node:path');
 const createServer = client => {
   const app = express()
   app.get("/", (_, res) => {
@@ -13,8 +14,20 @@ const createServer = client => {
         res.status(202).send('Accepted');
         
         const githubEvent = req.headers['x-github-event'];
-        const fileName = `github-webhook-${githubEvent}-${Date.now()}.json`;
+        const fileName = `services/github-webhook-${githubEvent}-${Date.now()}.json`;
         fs.writeFileSync(fileName, JSON.stringify(req.body, null, 4));
+    })
+
+    app.get("/events", (_, res) => {
+        const eventFiles = fs.readdirSync(__dirname).filter(file => file.startsWith('github-webhook-'));
+
+        // read all files and send them as json
+        const events = eventFiles.map(file => {
+            return { [file]: JSON.parse(fs.readFileSync("services/" + file))};
+        });
+
+        
+        res.send(JSON.stringify({events: events}));
     })
 
   return app
