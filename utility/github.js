@@ -38,6 +38,16 @@ const createIssue = async (owner, repo, title, body) => {
     return response.data;
 }
 
+const updateIssue = async (owner, repo, issueNumber, updateBody) => {
+    const octokit = await getOctokit();
+    return await octokit.issues.update({
+        owner,
+        repo,
+        issue_number: issueNumber,
+        ...updateBody
+    });
+}
+
 const addIssueComment = async (owner, repo, issueNumber, body) => {
     const octokit = await getOctokit();
     // Create rest api call to github using octokit
@@ -61,6 +71,28 @@ const getIssueCommentByReference = async (owner, repo, commentId) => {
     });
 
     return comments.data;
+}
+
+// List issue events
+const listIssueEvents = async (owner, repo, perPage) => {
+    const octokit = await getOctokit();
+    const events = await octokit.rest.issues.listEventsForRepo({
+        owner,
+        repo,
+        per_page: perPage
+    });
+
+    return events.data;
+}
+
+const listIssues = async (owner, repo, state) => {
+    const octokit = await getOctokit();
+    const events = await octokit.rest.issues.listForRepo({
+        owner,
+        repo,
+    });
+
+    return events.data;
 }
 
 // GRAPHQL
@@ -191,4 +223,4 @@ const setIssueState = async (owner, repo, projectName, itemId, state) => {
 
 
 // Export states and functions
-module.exports = { ProjectStates, createIssue, addIssueComment, getIssueCommentByReference, addIssueToProject, setIssueState };
+module.exports = { ProjectStates, createIssue, addIssueComment, getIssueCommentByReference, addIssueToProject, setIssueState, updateIssue, listIssueEvents, listIssues };
