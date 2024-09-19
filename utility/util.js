@@ -105,9 +105,9 @@ const pairCreatedThreadWithIssue = async (thread) => {
     const tags = thread.parent.availableTags;
     const assignedTag = tags.find(tag => tag.name === "Assigned");
     const closedTag = tags.find(tag => tag.name === "Closed");
-    if (thread.appliedTags.filter(t => t.id === closedTag.id).length > 0) return;
+    if (thread.appliedTags.filter(t => t.id === closedTag).length > 0) return;
 
-    const projectState = thread.appliedTags.filter(t => t.id === assignedTag.id).length > 0 ? ProjectStates.InProgress : ProjectStates.Ready;
+    const projectState = thread.appliedTags.filter(t => t.id === assignedTag).length > 0 ? ProjectStates.InProgress : ProjectStates.Ready;
 
     // Filter for messages from the bot
     const botMessages = messages.filter(m => m.author.id === thread.client.user.id);
