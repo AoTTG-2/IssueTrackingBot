@@ -51,8 +51,6 @@ const createServer = client => {
         {
           const number = event.issue.number;
           const comment = await findBotCommentOnIssue(process.env.OWNER, process.env.REPO, number);
-          console.log(comment);
-
           const { channelId, threadId, threadUrl, projV2Id } = parseDiscordReference(comment.body);
 
           // Set issue state to "In Progress"
@@ -69,11 +67,12 @@ const createServer = client => {
           thread.setArchived(false);
           thread.setLocked(false);
           
-          // Log the allowed tags for the thread
-          console.log(thread.parent.availableTags);
+          const tags = thread.parent.allowedTags.filter(tag => tag.name !== "In Progress");
 
-          // remove all thread tags and add "In Progress" tag
-          thread.setAppliedTags(["In Progress"]);
+          if (tags.length > 0)
+          {
+            thread.setAppliedTags(tags);
+          }
         }
         else if (event.action == "closed")
         {
