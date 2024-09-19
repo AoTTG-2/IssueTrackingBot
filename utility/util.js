@@ -122,6 +122,7 @@ const pairCreatedThreadWithIssue = async (thread) => {
 
     // Log tags
     console.log(tags);
+    console.log(thread.appliedTags.filter(t => t.id === closedTag.id).length);
 
     const createIssueResponse = await createIssue(process.env.OWNER, process.env.REPO, `${post.author}: ${thread.name}`, post.content);
     const addIssueToProjectResponse = await addIssueToProject(process.env.OWNER, process.env.REPO, process.env.PROJECT, createIssueResponse.node_id);
