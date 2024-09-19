@@ -54,7 +54,7 @@ module.exports = {
         for (const thread of threads.threads) {
             for (const th of thread)
             {
-                await pairCreatedThreadWithIssue(thread);
+                await pairCreatedThreadWithIssue(th);
                 count++;
             }
         }
