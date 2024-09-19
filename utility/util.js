@@ -111,10 +111,20 @@ const pairCreatedThreadWithIssue = async (thread) => {
 
     // Filter for messages from the bot
     const botMessages = messages.filter(m => m.author.id === thread.client.user.id);
-    const botMessage = botMessages.first();
+    let botMessage = botMessages.first();
+
+
 
     // already tracked
-    if (botMessage) return;
+    if (botMessage) {
+        // check if message starts with Thread Reference
+        if (botMessage.content.startsWith('Referenced Thread')) {
+            // check if a second message exists
+            if (botMessages.size > 1) {
+                return;
+            }
+        }
+    }
     console.log("Creating pair with issue");
 
     const createIssueResponse = await createIssue(process.env.OWNER, process.env.REPO, `${post.author}: ${thread.name}`, post.content);

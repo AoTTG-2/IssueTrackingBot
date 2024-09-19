@@ -53,7 +53,7 @@ module.exports = {
         // Copy the thread over to the new channel by creating a new thread with the same name, content, and messages (up to 20)
         const newThread = await channel.threads.create({
             name: thread.name,
-            message: threadUrl + "\n" + post.content,
+            message: `Referenced Thread:${threadUrl}\n${post.content}`,
             autoArchiveDuration: 60,
             type: ForumChannel,
         });
