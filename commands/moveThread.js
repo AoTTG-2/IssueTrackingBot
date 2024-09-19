@@ -52,21 +52,6 @@ module.exports = {
             type: ForumChannel,
         });
 
-        
-
-        await interaction.reply({content: `Moved ${thread.name} to ${channel.name}.`, ephemeral: true});
-
-        // Send up to 20 of the messages from the old thread to the new thread
-        let count = 0;
-        for (const message of messages) {
-            const [, messageObj] = message;
-            if (messageObj.author.id === thread.client.user.id) {
-                newThread.send(messageObj.content);
-                count++;
-            }
-            // add delay
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            if (count >= 20) break;
-        }
+        await interaction.reply({content: `Referenced ${thread.name} to ${channel.name}.`, ephemeral: true});
 	},
 };
