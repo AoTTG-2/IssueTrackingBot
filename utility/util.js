@@ -1,7 +1,8 @@
 
 const createGithubReference = (issueNumber, nodeId, projv2Id, htmlUrl) => {
-    // const githubReferenceComment = `IssueID: ${createIssueResponse.number}\nIssueNodeID: ${createIssueResponse.node_id}\nIssueURL: ${createIssueResponse.html_url}`;
-    return `IssueID: ${issueNumber}\nIssueNodeID: ${nodeId}\nProjectIssueID: ${projv2Id}\nIssueURL: ${htmlUrl}`;
+    const msg = `IssueID: ${issueNumber}\nIssueNodeID: ${nodeId}\nProjectIssueID: ${projv2Id}\nIssueURL: ${htmlUrl}`;
+    console.log(msg);
+    return msg;
 }
 
 const parseGithubReference = (githubReference) => {
@@ -21,7 +22,9 @@ const parseGithubReference = (githubReference) => {
 
 const createDiscordReference = (channelId, threadId, threadUrl, projV2Id) => {
     // const discordReferenceComment = `DiscordThread: ${thread.id}\nDiscordThreadURL: ${thread.url}`;
-    return `DiscordChannel: ${channelId}\nDiscordThread: ${threadId}\nDiscordThreadURL: ${threadUrl}\nProjectIssueID: ${projV2Id}`;
+    const msg = `DiscordChannel: ${channelId}\nDiscordThread: ${threadId}\nDiscordThreadURL: ${threadUrl}\nProjectIssueID: ${projV2Id}`;
+    console.log(msg);
+    return msg;
 }
 
 const parseDiscordReference = (discordReference) => {
