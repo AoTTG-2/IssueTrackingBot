@@ -29,7 +29,8 @@ module.exports = {
 	name: Events.ThreadCreate,
 	async execute(thread, boolean) {
 		// check if channel is tracked
-		//if (!isChannelTracked(thread.parentId)) return;
+		console.log(thread.parentId);
+		if (!isChannelTracked(thread.parentId)) return;
 		await pairCreatedThreadWithIssue(thread);
 		// // Log the thread title, body, creator, and tags
 		// console.log(`A new thread was created: ${thread}`);
