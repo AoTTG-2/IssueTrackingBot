@@ -61,6 +61,17 @@ const addIssueComment = async (owner, repo, issueNumber, body) => {
     return response.data;
 }
 
+const findBotCommentOnIssue = async (owner, repo, issueNumber) => {
+    const octokit = await getOctokit();
+    const comments = await octokit.rest.issues.listComments({
+        owner,
+        repo,
+        issue_number: issueNumber
+    });
+
+    return comments.data.find(comment => comment.user.login === process.env.BOTUSER);
+}
+
 const getIssueCommentByReference = async (owner, repo, commentId) => {
     const octokit = await getOctokit();
     // Using the return result of addIssueComment, we can get the comment id
@@ -223,4 +234,15 @@ const setIssueState = async (owner, repo, projectName, itemId, state) => {
 
 
 // Export states and functions
-module.exports = { ProjectStates, createIssue, addIssueComment, getIssueCommentByReference, addIssueToProject, setIssueState, updateIssue, listIssueEvents, listIssues };
+module.exports = {
+    ProjectStates,
+    createIssue,
+    addIssueComment,
+    getIssueCommentByReference,
+    addIssueToProject,
+    setIssueState,
+    updateIssue,
+    listIssueEvents,
+    listIssues,
+    findBotCommentOnIssue,
+};

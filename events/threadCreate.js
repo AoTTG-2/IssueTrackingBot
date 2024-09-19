@@ -4,11 +4,15 @@ const fs = require('node:fs');
 
 const {
 	ProjectStates,
-	createIssue,
-	addIssueComment,
-	getIssueCommentByReference,
-	addIssueToProject,
-	setIssueState
+    createIssue,
+    addIssueComment,
+    getIssueCommentByReference,
+    addIssueToProject,
+    setIssueState,
+    updateIssue,
+    listIssueEvents,
+    listIssues,
+    findBotCommentOnIssue,
 } = require('../utility/github');
 
 module.exports = {
