@@ -92,9 +92,6 @@ const createServer = client => {
           {
             thread.setAppliedTags([tag.id]);
           }
-
-          // Update the tag on discord to "In Progress"
-          thread.setArchived(true);
         }
 
     })

@@ -49,16 +49,20 @@ module.exports = {
         // Get all threads in channel
         const threads = await channel.threads.fetch();
         
+        // get the number of threads
+        const count = threads.threads.size;
+
+        await interaction.reply({content: `Tracking ${channel.name} and backfilled ${count} threads.`, ephemeral: true});
+
         // Iterate through threads
-        let count=0;
         for (const thread of threads.threads) {
             const [, threadObj] = thread;
             if (threadObj.archived) {
                 continue;
             }
             pairCreatedThreadWithIssue(threadObj);
+            // sleep a little while to avoid rate limiting
+            await new Promise(resolve => setTimeout(resolve, 2000));
         }
-        
-        await interaction.reply({content: `Tracking ${channel.name} and backfilled ${count} threads.`, ephemeral: true});
 	},
 };
