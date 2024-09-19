@@ -127,7 +127,7 @@ const pairCreatedThreadWithIssue = async (thread) => {
     }
     console.log("Creating pair with issue");
 
-    const createIssueResponse = await createIssue(process.env.OWNER, process.env.REPO, `${post.author}: ${thread.name}`, post.content);
+    const createIssueResponse = await createIssue(process.env.OWNER, process.env.REPO, `${post.author.username}: ${thread.name}`, post.content);
     const addIssueToProjectResponse = await addIssueToProject(process.env.OWNER, process.env.REPO, process.env.PROJECT, createIssueResponse.node_id);
     const setIssueStateResponse = await setIssueState(process.env.OWNER, process.env.REPO, process.env.PROJECT, addIssueToProjectResponse, projectState);
 
