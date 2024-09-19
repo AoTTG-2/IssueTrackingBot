@@ -14,7 +14,7 @@ const {
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('trackthread')
-		.setDescription('Will go through the referenced channel and all its threads, creating issues for any threads without issues.')
+		.setDescription('Will track a thread and backfill issues.')
         .addChannelOption(option => option.setName('channel').setDescription('The channel to track threads in.').setRequired(true))
         .addBooleanOption(option => option.setName('backfill').setDescription('Whether to backfill issues').setRequired(true))
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
