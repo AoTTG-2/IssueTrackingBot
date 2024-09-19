@@ -25,7 +25,7 @@ module.exports = {
         console.log(channel);
         
         // if the channel is not a forum, return an ephemeral error
-        if (typeof channel == ThreadChannel) {
+        if (typeof channel !== ThreadChannel) {
             await interaction.reply({content: 'The channel must be a thread.', ephemeral: true});
             return;
         }
