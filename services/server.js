@@ -87,10 +87,6 @@ const createServer = client => {
 
           // Get the applied tags
           console.log(thread.parent.availableTags);
-
-          // Update the tag on discord to "In Progress"
-          thread.setArchived(true);
-          thread.setLocked(true);
           
           const tag = thread.parent.availableTags.find(tag => tag.name === "Closed");
           console.log(tag);
@@ -99,6 +95,10 @@ const createServer = client => {
           {
             thread.setAppliedTags([tag.id]);
           }
+
+          // Update the tag on discord to "In Progress"
+          thread.setArchived(true);
+          thread.setLocked(true);
         }
 
     })
