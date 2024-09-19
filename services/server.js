@@ -61,14 +61,14 @@ const createServer = client => {
           const thread = await channel.threads.fetch(threadId);
 
           // Get the applied tags
-          console.log(thread.parent.allowedTags);
+          console.log(thread.parent.availableTags);
           console.log(thread.appliedTags);
 
           // Update the tag on discord to "In Progress"
           thread.setArchived(false);
           thread.setLocked(false);
           
-          const tags = thread.parent.allowedTags.find(tag => tag.name !== "In Progress");
+          const tags = thread.parent.availableTags.find(tag => tag.name !== "In Progress");
 
           if (tags.length > 0)
           {
