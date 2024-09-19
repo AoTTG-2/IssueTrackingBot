@@ -42,6 +42,8 @@ module.exports = {
 		const githubReferenceComment = createGithubReference(createIssueResponse.number, createIssueResponse.node_id, createIssueResponse.html_url);
 		thread.send(githubReferenceComment);
 
+		console.log(thread.channel);
+
 		// Create the discord thread reference message for github (used to reference the discord thread later)
 		const discordReferenceComment = createDiscordReference(thread.channel.id, thread.id, thread.url);
 		const addIssueCommentResponse = await addIssueComment(process.env.OWNER, process.env.REPO, createIssueResponse.number, discordReferenceComment);
