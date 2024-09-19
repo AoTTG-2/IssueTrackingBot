@@ -35,10 +35,10 @@ module.exports = {
 		console.log(`${post.author}: ${post.content}`);
 
 		// Log thread parent channel
-		console.log(`Thread parent channel: ${thread.parentID}`);
+		console.log(`Thread parent channel: ${thread.parentId}`);
 
 		// Resolve the id to a channel
-		const channel = await thread.guild.channels.fetch(thread.parentID);
+		const channel = await thread.guild.channels.fetch(thread.parentId);
 
 		// Log the channel name
 		console.log(`Channel name: ${channel.name}`);
