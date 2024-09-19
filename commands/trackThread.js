@@ -42,19 +42,18 @@ module.exports = {
         // Get backfill
         const backfill = interaction.options.getBoolean('backfill');
         if (!backfill) {
-            await interaction.reply({content: 'Tracking thread without backfilling.', ephemeral: true});
+            await interaction.reply({content: `Tracking ${channel.name} without backfilling.`, ephemeral: true});
             return;
         }
         
         // Get all threads in channel
         const threads = await channel.threads.fetch();
-
-        console.log(threads);
-
+        
         // Iterate through threads
         for (const thread of threads.threads) {
             await pairCreatedThreadWithIssue(thread);
         }
         
+        await interaction.reply({content: `Tracking ${channel.name} and backfilled ${threads.threads.length} threads.`, ephemeral: true});
 	},
 };
