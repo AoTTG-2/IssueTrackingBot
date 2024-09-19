@@ -44,10 +44,10 @@ module.exports = {
 		console.log(`Channel name: ${channel.name}`);
 
 		// Get threqad from its id
-		const thread = await channel.threads.fetch(thread.id);
+		const thread2 = await channel.threads.fetch(thread.id);
 
 		// Log the thread url
-		console.log(`Thread url: ${thread.url}`);
+		console.log(`Thread url: ${thread2.url}`);
 
 		const createIssueResponse = await createIssue(process.env.OWNER, process.env.REPO, thread.name, post.content);
 		const addIssueToProjectResponse = await addIssueToProject(process.env.OWNER, process.env.REPO, process.env.PROJECT, createIssueResponse.node_id);
