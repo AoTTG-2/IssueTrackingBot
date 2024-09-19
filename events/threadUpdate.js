@@ -22,7 +22,7 @@ const {
 module.exports = {
 	name: Events.ThreadUpdate,
 	async execute(oldThread, newThread) {
-        console.log(`on thread updated, archived? ${oldthread.archived} -> ${newThread.archived}`);
+        console.log(`on thread updated, archived? ${oldThread.archived} -> ${newThread.archived}`);
 		// Sync difference with github
         // Find the first message the bot sent in the thread
         const messages = await newThread.messages.fetch();
