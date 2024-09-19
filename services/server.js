@@ -49,22 +49,14 @@ const createServer = client => {
         }
         else if (event.action == "assigned")
         {
-          // Change the state of the issue to "In Progress", update the tag on discord to "In Progress"
           const number = event.issue.number;
-          let node_id = event.issue.node_id;
-
-          const issueResponse = await getIssueByNumber(process.env.OWNER, process.env.REPO, number);
-          console.log(`${node_id}, ${issueResponse.node_id}`);
-          node_id = issueResponse.node_id;
-          
-
-          // Set issue state to "In Progress"
-          await setIssueState(process.env.OWNER, process.env.REPO, process.env.PROJECT, node_id, ProjectStates.InProgress);
-
           const comment = await findBotCommentOnIssue(process.env.OWNER, process.env.REPO, number);
           console.log(comment);
 
-          const { channelId, threadId, threadUrl } = parseDiscordReference(comment.body);
+          const { channelId, threadId, threadUrl, projV2Id } = parseDiscordReference(comment.body);
+
+          // Set issue state to "In Progress"
+          await setIssueState(process.env.OWNER, process.env.REPO, process.env.PROJECT, projV2Id, ProjectStates.InProgress);
 
           // Get the thread
           const channel = await client.channels.fetch(channelId);
@@ -87,7 +79,7 @@ const createServer = client => {
           const comment = await findBotCommentOnIssue(process.env.OWNER, process.env.REPO, number);
           console.log(comment);
 
-          const { channelId, threadId, threadUrl } = parseDiscordReference(comment.body);
+          const { channelId, threadId, threadUrl, projV2Id } = parseDiscordReference(comment.body);
 
           // Get the thread
           const channel = await client.channels.fetch(channelId);

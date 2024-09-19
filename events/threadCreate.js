@@ -39,14 +39,14 @@ module.exports = {
 		const setIssueStateResponse = await setIssueState(process.env.OWNER, process.env.REPO, process.env.PROJECT, addIssueToProjectResponse, ProjectStates.Ready);
 
 		// Create the github reference message for discord (used to reference the github case later)
-		const githubReferenceComment = createGithubReference(createIssueResponse.number, createIssueResponse.node_id, createIssueResponse.html_url);
+		const githubReferenceComment = createGithubReference(createIssueResponse.number, createIssueResponse.node_id, addIssueToProjectResponse, createIssueResponse.html_url);
 		thread.send(githubReferenceComment);
 
 		// console.log(thread);
 
 		// Create the discord thread reference message for github (used to reference the discord thread later)
 		const discordReferenceComment = createDiscordReference(thread.parentId, thread.id, thread.url);
-		const addIssueCommentResponse = await addIssueComment(process.env.OWNER, process.env.REPO, createIssueResponse.number, discordReferenceComment);
+		const addIssueCommentResponse = await addIssueComment(process.env.OWNER, process.env.REPO, createIssueResponse.number, discordReferenceComment, addIssueToProjectResponse);
 	},
 };
 
