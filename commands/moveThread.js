@@ -37,19 +37,21 @@ module.exports = {
             return;
         }
 
-        // Copy the thread over to the new channel by creating a new thread with the same name, content, and messages (up to 20)
-        const newThread = await channel.threads.create({
-            name: thread.name,
-            reason: `Moved by ${interaction.user.tag}`,
-            autoArchiveDuration: 60,
-            type: ForumChannel,
-        });
-
         const messages = await thread.messages.fetch();
         const post = messages.first();
         if (!post) return;
 
         newThread.send(post.content);
+
+        // Copy the thread over to the new channel by creating a new thread with the same name, content, and messages (up to 20)
+        const newThread = await channel.threads.create({
+            name: thread.name,
+            message: post.content,
+            autoArchiveDuration: 60,
+            type: ForumChannel,
+        });
+
+        
 
         await interaction.reply({content: `Moved ${thread.name} to ${channel.name}.`, ephemeral: true});
 
