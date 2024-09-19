@@ -35,7 +35,7 @@ module.exports = {
             await interaction.reply({content: `The channel is missing the following tags: ${missingTags.join(', ')}`, ephemeral: true});
             return;
         }
-        
+
         // Add channel to tracked channels
         addTrackedChannel({name: channel.name, id: channel.id});
 
@@ -48,6 +48,8 @@ module.exports = {
         
         // Get all threads in channel
         const threads = await channel.threads.fetch();
+
+        console.log(threads);
 
         // Iterate through threads
         for (const thread of threads) {
