@@ -34,21 +34,6 @@ module.exports = {
 
 		console.log(`${post.author}: ${post.content}`);
 
-		// Log thread parent channel
-		console.log(`Thread parent channel: ${thread.parentId}`);
-
-		// Resolve the id to a channel
-		const channel = await thread.guild.channels.fetch(thread.parentId);
-
-		// Log the channel name
-		console.log(`Channel name: ${channel.name}`);
-
-		// Get threqad from its id
-		const thread2 = await channel.threads.fetch(thread.id);
-
-		// Log the thread url
-		console.log(`Thread url: ${thread2.url}`);
-
 		const createIssueResponse = await createIssue(process.env.OWNER, process.env.REPO, thread.name, post.content);
 		const addIssueToProjectResponse = await addIssueToProject(process.env.OWNER, process.env.REPO, process.env.PROJECT, createIssueResponse.node_id);
 		const setIssueStateResponse = await setIssueState(process.env.OWNER, process.env.REPO, process.env.PROJECT, addIssueToProjectResponse, ProjectStates.Ready);
@@ -60,7 +45,7 @@ module.exports = {
 		// console.log(thread);
 
 		// Create the discord thread reference message for github (used to reference the discord thread later)
-		const discordReferenceComment = createDiscordReference(thread.channel.id, thread.id, thread.url);
+		const discordReferenceComment = createDiscordReference(thread.parentId, thread.id, thread.url);
 		const addIssueCommentResponse = await addIssueComment(process.env.OWNER, process.env.REPO, createIssueResponse.number, discordReferenceComment);
 	},
 };
