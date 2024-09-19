@@ -67,7 +67,7 @@ const createServer = client => {
           thread.setArchived(false);
           thread.setLocked(false);
           
-          const tag = thread.parent.availableTags.find(tag => tag.name === "In Progress");
+          const tag = thread.parent.availableTags.find(tag => tag.name === "Assigned");
           console.log(tag);
 
           if (tag)
@@ -77,11 +77,8 @@ const createServer = client => {
         }
         else if (event.action == "closed")
         {
-          // Update the tag on discord to "closed" and archive the thread.
           const number = event.issue.number;
           const comment = await findBotCommentOnIssue(process.env.OWNER, process.env.REPO, number);
-          console.log(comment);
-
           const { channelId, threadId, threadUrl, projV2Id } = parseDiscordReference(comment.body);
 
           // Get the thread
@@ -89,14 +86,19 @@ const createServer = client => {
           const thread = await channel.threads.fetch(threadId);
 
           // Get the applied tags
-          console.log(channel.appliedTags);
+          console.log(thread.parent.availableTags);
 
           // Update the tag on discord to "In Progress"
           thread.setArchived(true);
           thread.setLocked(true);
           
-          // remove all thread tags and add "In Progress" tag
-          thread.setAppliedTags(["Closed"]);
+          const tag = thread.parent.availableTags.find(tag => tag.name === "Closed");
+          console.log(tag);
+
+          if (tag)
+          {
+            thread.setAppliedTags([tag]);
+          }
         }
 
     })
