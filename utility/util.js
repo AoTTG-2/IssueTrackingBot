@@ -74,9 +74,9 @@ const removeTrackedChannel = (channel) => {
     saveTrackerJson(tracker);
 }
 
-const isChannelTracked = (channel) => {
+const isChannelTracked = (id) => {
     const tracker = getTrackerJson();
-    return tracker.tracked.find(c => c.id === channel.id);
+    return tracker.tracked.find(c => c.id === id);
 }
 
 const getTrackerJson = () => {
