@@ -52,12 +52,11 @@ module.exports = {
         // Iterate through threads
         let count=0;
         for (const thread of threads.threads) {
-            for (const th of thread)
-            {
-                console.log(th);
-                await pairCreatedThreadWithIssue(th);
-                count++;
+            const [, threadObj] = thread;
+            if (threadObj.archived) {
+                continue;
             }
+            await pairCreatedThreadWithIssue(threadObj);
         }
         
         await interaction.reply({content: `Tracking ${channel.name} and backfilled ${count} threads.`, ephemeral: true});
