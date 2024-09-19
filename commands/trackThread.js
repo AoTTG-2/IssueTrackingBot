@@ -52,7 +52,7 @@ module.exports = {
         console.log(threads);
 
         // Iterate through threads
-        for (const thread of threads) {
+        for (const thread of threads.threads) {
             await pairCreatedThreadWithIssue(thread);
         }
         
