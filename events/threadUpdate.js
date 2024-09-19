@@ -17,17 +17,13 @@ const {
 	setIssueState,
     updateIssue,
     listIssueEvents,
-} = require('../utility/github');
+} = require('../utility/github.js');
 
 module.exports = {
 	name: Events.ThreadUpdate,
 	async execute(oldThread, newThread) {
+        console.log(`on thread updated, archived? ${oldthread.archived} -> ${newThread.archived}`);
 		// Sync difference with github
-        
-        // Name Change, update issue title, body
-        // Archive State change, if closed, close issue, if open, open issue
-        // Lock State change, if locked, close issue, if unlocked, open issue
-
         // Find the first message the bot sent in the thread
         const messages = await newThread.messages.fetch();
         

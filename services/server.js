@@ -37,8 +37,6 @@ const createServer = client => {
         }
 
         const event = req.body;
-
-        console.log(event);
         if (event.issue.user == process.env.BOTUSER || event.issue.performed_via_github_app)
         {
           return;
@@ -51,6 +49,7 @@ const createServer = client => {
         }
         else if (event.action == "assigned")
         {
+          console.log("on assigned");
           const number = event.issue.number;
           const comment = await findBotCommentOnIssue(process.env.OWNER, process.env.REPO, number);
           const { channelId, threadId, threadUrl, projV2Id } = parseDiscordReference(comment.body);
@@ -75,6 +74,7 @@ const createServer = client => {
         }
         else if (event.action == "closed")
         {
+          console.log("on closed");
           const number = event.issue.number;
           const comment = await findBotCommentOnIssue(process.env.OWNER, process.env.REPO, number);
           const { channelId, threadId, threadUrl, projV2Id } = parseDiscordReference(comment.body);
