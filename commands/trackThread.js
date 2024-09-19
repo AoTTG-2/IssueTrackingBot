@@ -52,7 +52,7 @@ module.exports = {
         // get the number of threads
         const count = threads.threads.size;
 
-        await interaction.reply({content: `Tracking ${channel.name} and backfilled ${count} threads.`, ephemeral: true});
+        await interaction.reply({content: `Tracking ${channel.name} and backfilling ${count} threads.`, ephemeral: true});
 
         // Iterate through threads
         for (const thread of threads.threads) {
