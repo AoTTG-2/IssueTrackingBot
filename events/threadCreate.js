@@ -45,8 +45,8 @@ module.exports = {
 		// console.log(thread);
 
 		// Create the discord thread reference message for github (used to reference the discord thread later)
-		const discordReferenceComment = createDiscordReference(thread.parentId, thread.id, thread.url);
-		const addIssueCommentResponse = await addIssueComment(process.env.OWNER, process.env.REPO, createIssueResponse.number, discordReferenceComment, addIssueToProjectResponse);
+		const discordReferenceComment = createDiscordReference(thread.parentId, thread.id, thread.url, addIssueToProjectResponse);
+		const addIssueCommentResponse = await addIssueComment(process.env.OWNER, process.env.REPO, createIssueResponse.number, discordReferenceComment);
 	},
 };
 
