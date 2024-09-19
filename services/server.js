@@ -37,6 +37,8 @@ const createServer = client => {
         }
 
         const event = req.body;
+
+        console.log(event);
         if (event.issue.user == process.env.BOTUSER || event.issue.performed_via_github_app)
         {
           return;
