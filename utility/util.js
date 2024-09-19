@@ -130,7 +130,7 @@ const pairCreatedThreadWithIssue = async (thread) => {
 
     const tag = thread.parent.availableTags.find(tag => tag.name === "Ready");
 
-    if (tag)
+    if (tag && projectState === ProjectStates.Ready)
     {
         thread.setAppliedTags([tag.id]);
     }
