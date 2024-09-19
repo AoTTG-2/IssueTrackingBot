@@ -67,12 +67,12 @@ const createServer = client => {
           thread.setArchived(false);
           thread.setLocked(false);
           
-          const tags = thread.parent.availableTags.find(tag => tag.name !== "In Progress");
-          console.log(tags);
+          const tag = thread.parent.availableTags.find(tag => tag.name === "In Progress");
+          console.log(tag);
 
           if (tags.length > 0)
           {
-            thread.setAppliedTags(tags);
+            thread.setAppliedTags([tag]);
           }
         }
         else if (event.action == "closed")
