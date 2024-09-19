@@ -55,10 +55,10 @@ module.exports = {
             // If the thread is archived, close the issue
             if (newThread.archived) {
                 updateBody.state = "closed";
-                updateBody.state_reason = "Automated close due to thread archive";
+                updateBody.state_reason = "completed";
             } else {
                 updateBody.state = "open";
-                updateBody.state_reason = "Automated open due to thread unarchive";
+                updateBody.state_reason = "not_planned";
             }
         }
         updateIssue(process.env.OWNER, process.env.REPO, issueId, updateBody);
