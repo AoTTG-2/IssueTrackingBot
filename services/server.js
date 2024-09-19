@@ -72,7 +72,7 @@ const createServer = client => {
 
           if (tag)
           {
-            thread.setAppliedTags([tag]);
+            thread.setAppliedTags([tag.id]);
           }
         }
         else if (event.action == "closed")
@@ -97,7 +97,7 @@ const createServer = client => {
 
           if (tag)
           {
-            thread.setAppliedTags([tag]);
+            thread.setAppliedTags([tag.id]);
           }
         }
 
