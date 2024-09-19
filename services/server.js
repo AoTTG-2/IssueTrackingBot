@@ -91,7 +91,6 @@ const createServer = client => {
 
           // Update the tag on discord to "In Progress"
           thread.setArchived(true);
-          thread.setLocked(true);
         }
 
     })
