@@ -23,6 +23,12 @@ module.exports = {
         const channel = interaction.options.getChannel('channel');
         const thread = interaction.options.getChannel('thread');
 
+        // if the thread is archived, do nothing
+        if (thread.archived) {
+            await interaction.reply({content: 'The thread is archived.', ephemeral: true});
+            return;
+        }
+
         // check if channel has availabletags
         if (!channel.availableTags) {
             await interaction.reply({content: 'The channel must be a thread.', ephemeral: true});
