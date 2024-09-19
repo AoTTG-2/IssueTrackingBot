@@ -34,6 +34,15 @@ module.exports = {
 
 		console.log(`${post.author}: ${post.content}`);
 
+		// Log thread parent channel
+		console.log(`Thread parent channel: ${thread.parentID}`);
+
+		// Resolve the id to a channel
+		const channel = await thread.guild.channels.fetch(thread.parentID);
+
+		// Log the channel name
+		console.log(`Channel name: ${channel.name}`);
+
 		const createIssueResponse = await createIssue(process.env.OWNER, process.env.REPO, thread.name, post.content);
 		const addIssueToProjectResponse = await addIssueToProject(process.env.OWNER, process.env.REPO, process.env.PROJECT, createIssueResponse.node_id);
 		const setIssueStateResponse = await setIssueState(process.env.OWNER, process.env.REPO, process.env.PROJECT, addIssueToProjectResponse, ProjectStates.Ready);
