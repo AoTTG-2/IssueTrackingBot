@@ -45,11 +45,13 @@ module.exports = {
 
         // If thread name changed, change issue title
         const updateBody = {};
-        if (oldThread.name !== newThread.name) {
-            // Add key title and set to new name
-            updateBody.title = newThread.name;
+        if (!newThread.archived) {
+            if (oldThread.name !== newThread.name) {
+                // Add key title and set to new name
+                updateBody.title = newThread.name;
+            }
         }
-
+        
         // Change state of issue based on archive and locked state
         if (oldThread.archived !== newThread.archived) {
             // If the thread is archived, close the issue
