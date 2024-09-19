@@ -45,12 +45,6 @@ module.exports = {
 
         // If thread name changed, change issue title
         const updateBody = {};
-        if (!newThread.archived) {
-            if (oldThread.name !== newThread.name) {
-                // Add key title and set to new name
-                updateBody.title = newThread.name;
-            }
-        }
         
         // Change state of issue based on archive and locked state
         if (oldThread.archived !== newThread.archived) {
@@ -62,7 +56,7 @@ module.exports = {
                 updateBody.state = "open";
                 updateBody.state_reason = "not_planned";
             }
+            updateIssue(process.env.OWNER, process.env.REPO, issueId, updateBody);
         }
-        updateIssue(process.env.OWNER, process.env.REPO, issueId, updateBody);
 	},
 };
