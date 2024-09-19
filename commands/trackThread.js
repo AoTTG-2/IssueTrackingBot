@@ -22,16 +22,20 @@ module.exports = {
         // Get the channel
         const channel = interaction.options.getChannel('channel');
 
-        console.log(channel);
-
-        console.log(typeof channel);
-        
-        // if the channel is not a forum, return an ephemeral error
-        if (typeof channel !== "ForumChannel") {
+        // check if channel has availabletags
+        if (!channel.availableTags) {
             await interaction.reply({content: 'The channel must be a thread.', ephemeral: true});
             return;
         }
 
+        // Check that channel has the required tags Ready, Assigned, and Closed
+        const requiredTags = ['Ready', 'Assigned', 'Closed'];
+        const missingTags = requiredTags.filter(tag => !channel.availableTags.find(t => t.name === tag));
+        if (missingTags.length > 0) {
+            await interaction.reply({content: `The channel is missing the following tags: ${missingTags.join(', ')}`, ephemeral: true});
+            return;
+        }
+        
         // Add channel to tracked channels
         addTrackedChannel({name: channel.name, id: channel.id});
 
