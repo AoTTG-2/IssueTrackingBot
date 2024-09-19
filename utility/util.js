@@ -107,6 +107,14 @@ const pairCreatedThreadWithIssue = async (thread) => {
     const closedTag = tags.find(tag => tag.name === "Closed");
     if (thread.appliedTags.filter(t => t.id === closedTag.id).length > 0) return;
 
+    // log applied tags
+    console.log(thread.appliedTags);
+
+    // Log tags
+    console.log(tags);
+
+    console.log("Creating pair with issue");
+
     const projectState = thread.appliedTags.filter(t => t.id === assignedTag.id).length > 0 ? ProjectStates.InProgress : ProjectStates.Ready;
 
     // Filter for messages from the bot
