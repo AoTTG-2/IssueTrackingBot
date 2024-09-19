@@ -117,13 +117,6 @@ const pairCreatedThreadWithIssue = async (thread) => {
     if (botMessage) return;
     console.log("Creating pair with issue");
 
-    // log applied tags
-    console.log(thread.appliedTags);
-
-    // Log tags
-    console.log(tags);
-    console.log(thread.appliedTags.filter(t => t.id === closedTag.id).length);
-
     const createIssueResponse = await createIssue(process.env.OWNER, process.env.REPO, `${post.author}: ${thread.name}`, post.content);
     const addIssueToProjectResponse = await addIssueToProject(process.env.OWNER, process.env.REPO, process.env.PROJECT, createIssueResponse.node_id);
     const setIssueStateResponse = await setIssueState(process.env.OWNER, process.env.REPO, process.env.PROJECT, addIssueToProjectResponse, projectState);
