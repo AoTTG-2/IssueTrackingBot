@@ -82,6 +82,10 @@ const createServer = client => {
           // Get the thread
           const channel = await client.channels.fetch(channelId);
           const thread = await channel.threads.fetch(threadId);
+
+          // If thread is already closed, return
+          if (thread.archived) return;
+
           const tag = thread.parent.availableTags.find(tag => tag.name === "Closed");
 
           if (tag)
