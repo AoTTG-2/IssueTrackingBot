@@ -56,7 +56,7 @@ module.exports = {
             if (threadObj.archived) {
                 continue;
             }
-            await pairCreatedThreadWithIssue(threadObj);
+            pairCreatedThreadWithIssue(threadObj);
         }
         
         await interaction.reply({content: `Tracking ${channel.name} and backfilled ${count} threads.`, ephemeral: true});
