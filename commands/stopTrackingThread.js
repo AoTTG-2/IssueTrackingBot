@@ -32,5 +32,6 @@ module.exports = {
         // Remove from tracking list
         removeTrackedChannel(channel);
         
+        await interaction.reply({content: `Removed ${channel.name} from tracking.`, ephemeral: true});
 	},
 };
