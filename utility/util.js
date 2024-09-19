@@ -107,14 +107,6 @@ const pairCreatedThreadWithIssue = async (thread) => {
     const closedTag = tags.find(tag => tag.name === "Closed");
     if (thread.appliedTags.filter(t => t.id === closedTag.id).length > 0) return;
 
-    // log applied tags
-    console.log(thread.appliedTags);
-
-    // Log tags
-    console.log(tags);
-
-    console.log("Creating pair with issue");
-
     const projectState = thread.appliedTags.filter(t => t.id === assignedTag.id).length > 0 ? ProjectStates.InProgress : ProjectStates.Ready;
 
     // Filter for messages from the bot
@@ -123,6 +115,13 @@ const pairCreatedThreadWithIssue = async (thread) => {
 
     // already tracked
     if (botMessage) return;
+    console.log("Creating pair with issue");
+
+    // log applied tags
+    console.log(thread.appliedTags);
+
+    // Log tags
+    console.log(tags);
 
     const createIssueResponse = await createIssue(process.env.OWNER, process.env.REPO, `${post.author}: ${thread.name}`, post.content);
     const addIssueToProjectResponse = await addIssueToProject(process.env.OWNER, process.env.REPO, process.env.PROJECT, createIssueResponse.node_id);
