@@ -15,6 +15,7 @@ const {
     listIssues,
     findBotCommentOnIssue,
 } = require('../utility/github');
+const { parseDiscordReference } = require('../utility/util');
 
 const createServer = client => {
   const app = express()
@@ -49,9 +50,29 @@ const createServer = client => {
         {
           // Change the state of the issue to "In Progress", update the tag on discord to "In Progress"
           const number = event.issue.number;
+          const node_id = event.issue.node_id;
+
+          // Set issue state to "In Progress"
+          await setIssueState(process.env.OWNER, process.env.REPO, process.env.PROJECT, node_id, ProjectStates.InProgress);
+
           const comment = await findBotCommentOnIssue(process.env.OWNER, process.env.REPO, number);
           console.log(comment);
 
+          const { channelId, threadId, threadUrl } = parseDiscordReference(comment.body);
+
+          // Get the thread
+          const channel = await client.channels.fetch(channelId);
+          const thread = await channel.threads.fetch(threadId);
+
+          // Get the applied tags
+          console.log(channel.appliedTags);
+
+          // Update the tag on discord to "In Progress"
+          thread.setArchived(false);
+          thread.setLocked(false);
+          
+          // remove all thread tags and add "In Progress" tag
+          thread.setAppliedTags(["In Progress"]);
         }
         else if (event.action == "closed")
         {
@@ -59,6 +80,22 @@ const createServer = client => {
           const number = event.issue.number;
           const comment = await findBotCommentOnIssue(process.env.OWNER, process.env.REPO, number);
           console.log(comment);
+
+          const { channelId, threadId, threadUrl } = parseDiscordReference(comment.body);
+
+          // Get the thread
+          const channel = await client.channels.fetch(channelId);
+          const thread = await channel.threads.fetch(threadId);
+
+          // Get the applied tags
+          console.log(channel.appliedTags);
+
+          // Update the tag on discord to "In Progress"
+          thread.setArchived(true);
+          thread.setLocked(true);
+          
+          // remove all thread tags and add "In Progress" tag
+          thread.setAppliedTags(["Closed"]);
         }
 
     })

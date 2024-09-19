@@ -17,19 +17,21 @@ const parseGithubReference = (githubReference) => {
     }
 }
 
-const createDiscordReference = (threadId, threadUrl) => {
+const createDiscordReference = (channelId, threadId, threadUrl) => {
     // const discordReferenceComment = `DiscordThread: ${thread.id}\nDiscordThreadURL: ${thread.url}`;
-    return `DiscordThread: ${threadId}\nDiscordThreadURL: ${threadUrl}`;
+    return `DiscordChannel: ${channelId}\nDiscordThread: ${threadId}\nDiscordThreadURL: ${threadUrl}`;
 }
 
 const parseDiscordReference = (discordReference) => {
     const lines = discordReference.split('\n');
-    const discordThreadId = lines[0].split(': ')[1];
-    const discordThreadUrl = lines[1].split(': ')[1];
+    const channelId = lines[0].split(': ')[1];
+    const threadId = lines[1].split(': ')[1];
+    const threadUrl = lines[2].split(': ')[1];
 
     return {
-        discordThreadId,
-        discordThreadUrl
+        channelId,
+        threadId,
+        threadUrl
     }
 }
 
