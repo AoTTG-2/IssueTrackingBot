@@ -52,6 +52,9 @@ module.exports = {
             type: ForumChannel,
         });
 
+        // Try to create an issue for the thread
+        pairCreatedThreadWithIssue(newThread);
+
         await interaction.reply({content: `Referenced ${thread.name} to ${channel.name}.`, ephemeral: true});
 	},
 };
