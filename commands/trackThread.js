@@ -23,6 +23,8 @@ module.exports = {
         const channel = interaction.options.getChannel('channel');
 
         console.log(channel);
+
+        console.log(typeof channel);
         
         // if the channel is not a forum, return an ephemeral error
         if (typeof channel !== "ForumChannel") {
