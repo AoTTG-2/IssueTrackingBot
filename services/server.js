@@ -69,6 +69,9 @@ const createServer = client => {
           thread.setArchived(false);
           thread.setLocked(false);
           
+          // Log the allowed tags for the thread
+          console.log(channel.allowedTags);
+
           // remove all thread tags and add "In Progress" tag
           thread.setAppliedTags(["In Progress"]);
         }

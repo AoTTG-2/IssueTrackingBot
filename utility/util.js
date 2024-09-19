@@ -1,7 +1,6 @@
 
 const createGithubReference = (issueNumber, nodeId, projv2Id, htmlUrl) => {
     const msg = `IssueID: ${issueNumber}\nIssueNodeID: ${nodeId}\nProjectIssueID: ${projv2Id}\nIssueURL: ${htmlUrl}`;
-    console.log(msg);
     return msg;
 }
 
@@ -23,7 +22,6 @@ const parseGithubReference = (githubReference) => {
 const createDiscordReference = (channelId, threadId, threadUrl, projV2Id) => {
     // const discordReferenceComment = `DiscordThread: ${thread.id}\nDiscordThreadURL: ${thread.url}`;
     const msg = `DiscordChannel: ${channelId}\nDiscordThread: ${threadId}\nDiscordThreadURL: ${threadUrl}\nProjectIssueID: ${projV2Id}`;
-    console.log(msg);
     return msg;
 }
 
