@@ -70,7 +70,7 @@ const createServer = client => {
           const tag = thread.parent.availableTags.find(tag => tag.name === "In Progress");
           console.log(tag);
 
-          if (tags.length > 0)
+          if (tag)
           {
             thread.setAppliedTags([tag]);
           }
