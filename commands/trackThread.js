@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits, ThreadChannel } = require('discord.js');
 const {
     createGithubReference,
     parseGithubReference,
@@ -25,7 +25,7 @@ module.exports = {
         console.log(channel);
         
         // if the channel is not a forum, return an ephemeral error
-        if (channel.threads === undefined) {
+        if (typeof channel == ThreadChannel) {
             await interaction.reply({content: 'The channel must be a thread.', ephemeral: true});
             return;
         }
