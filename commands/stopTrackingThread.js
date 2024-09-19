@@ -28,12 +28,6 @@ module.exports = {
 	async execute(interaction) {
         // Get the channel
         const channel = interaction.options.getChannel('channel');
-                
-        // if the channel is not a forum, return an ephemeral error
-        if (channel.type !== "Forum") {
-            await interaction.reply({content: 'The channel must be a thread.', ephemeral: true});
-            return;
-        }
 
         // Remove from tracking list
         removeTrackedChannel(channel);
