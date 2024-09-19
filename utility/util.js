@@ -1,5 +1,5 @@
 
-const createGithubReference = (issueNumber, nodeId, projv2Id htmlUrl) => {
+const createGithubReference = (issueNumber, nodeId, projv2Id, htmlUrl) => {
     // const githubReferenceComment = `IssueID: ${createIssueResponse.number}\nIssueNodeID: ${createIssueResponse.node_id}\nIssueURL: ${createIssueResponse.html_url}`;
     return `IssueID: ${issueNumber}\nIssueNodeID: ${nodeId}\nProjectIssueID: ${projv2Id}\nIssueURL: ${htmlUrl}`;
 }
