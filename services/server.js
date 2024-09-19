@@ -14,6 +14,7 @@ const {
     listIssueEvents,
     listIssues,
     findBotCommentOnIssue,
+    getIssueByNumber,
 } = require('../utility/github');
 const { parseDiscordReference } = require('../utility/util');
 
@@ -50,7 +51,12 @@ const createServer = client => {
         {
           // Change the state of the issue to "In Progress", update the tag on discord to "In Progress"
           const number = event.issue.number;
-          const node_id = event.issue.node_id;
+          let node_id = event.issue.node_id;
+
+          const issueResponse = await getIssueByNumber(process.env.OWNER, process.env.REPO, number);
+          console.log(`${node_id}, ${issueResponse.node_id}`);
+          node_id = issueResponse.node_id;
+          
 
           // Set issue state to "In Progress"
           await setIssueState(process.env.OWNER, process.env.REPO, process.env.PROJECT, node_id, ProjectStates.InProgress);

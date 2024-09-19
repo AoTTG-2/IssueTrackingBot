@@ -84,6 +84,18 @@ const getIssueCommentByReference = async (owner, repo, commentId) => {
     return comments.data;
 }
 
+// Get issue by number
+const getIssueByNumber = async (owner, repo, issueNumber) => {
+    const octokit = await getOctokit();
+    const issue = await octokit.rest.issues.get({
+        owner,
+        repo,
+        issue_number: issueNumber
+    });
+
+    return issue.data;
+}
+
 // List issue events
 const listIssueEvents = async (owner, repo, perPage) => {
     const octokit = await getOctokit();
@@ -245,4 +257,5 @@ module.exports = {
     listIssueEvents,
     listIssues,
     findBotCommentOnIssue,
+    getIssueByNumber
 };
