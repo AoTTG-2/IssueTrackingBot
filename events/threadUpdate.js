@@ -27,6 +27,8 @@ module.exports = {
         // If thread parentid is not tracked, return
         if (!isChannelTracked(newThread.parentId)) return;
 
+        console.log(`A thread was updated`);
+
         // if thread is now archived, unarchive it
         if (newThread.archived) {
             await newThread.setArchived(false);

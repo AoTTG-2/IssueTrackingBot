@@ -43,6 +43,7 @@ const createServer = client => {
         }
         if (event.action == "opened")
         {
+          console.log("on opened, but we do nothing");
           const number = event.issue.number;
           const node_id = event.issue.node_id;
           const html_url = event.issue.html_url;
