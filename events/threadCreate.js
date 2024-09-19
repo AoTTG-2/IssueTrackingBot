@@ -47,6 +47,13 @@ module.exports = {
 		// Create the discord thread reference message for github (used to reference the discord thread later)
 		const discordReferenceComment = createDiscordReference(thread.parentId, thread.id, thread.url, addIssueToProjectResponse);
 		const addIssueCommentResponse = await addIssueComment(process.env.OWNER, process.env.REPO, createIssueResponse.number, discordReferenceComment);
+
+		const tag = thread.parent.availableTags.find(tag => tag.name === "Ready");
+
+		if (tag)
+		{
+			thread.setAppliedTags([tag.id]);
+		}
 	},
 };
 

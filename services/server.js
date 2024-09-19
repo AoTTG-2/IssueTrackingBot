@@ -60,15 +60,11 @@ const createServer = client => {
           const channel = await client.channels.fetch(channelId);
           const thread = await channel.threads.fetch(threadId);
 
-          // Get the applied tags
-          console.log(thread.parent.availableTags);
-
           // Update the tag on discord to "In Progress"
           thread.setArchived(false);
           thread.setLocked(false);
           
           const tag = thread.parent.availableTags.find(tag => tag.name === "Assigned");
-          console.log(tag);
 
           if (tag)
           {
@@ -84,12 +80,7 @@ const createServer = client => {
           // Get the thread
           const channel = await client.channels.fetch(channelId);
           const thread = await channel.threads.fetch(threadId);
-
-          // Get the applied tags
-          console.log(thread.parent.availableTags);
-          
           const tag = thread.parent.availableTags.find(tag => tag.name === "Closed");
-          console.log(tag);
 
           if (tag)
           {
