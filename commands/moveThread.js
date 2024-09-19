@@ -41,10 +41,13 @@ module.exports = {
         const post = messages.first();
         if (!post) return;
 
+        // create a link to previous thread
+        const threadUrl = `https://discord.com/channels/${thread.guild.id}/${thread.id}`;
+
         // Copy the thread over to the new channel by creating a new thread with the same name, content, and messages (up to 20)
         const newThread = await channel.threads.create({
             name: thread.name,
-            message: post.content,
+            message: threadUrl + "\n" + post.content,
             autoArchiveDuration: 60,
             type: ForumChannel,
         });
