@@ -20,7 +20,7 @@ module.exports = {
 		const threadName = interaction.channel.name;
 		// Append assigned user's name to thread name
 		await interaction.channel.setName(`${threadName}-assigned-${user.username}`);
-		await interaction.channel.send(`Thread assigned to ${user.username}`);
 		ChangeThreadState(interaction.channel, 'assigned');
+		await interaction.reply({ content: `Thread assigned to ${user.username}`, ephemeral: false });
 	},
 };

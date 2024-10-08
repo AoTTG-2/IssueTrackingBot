@@ -19,7 +19,9 @@ module.exports = {
 		if (threadName.includes('-assigned-')) {
 			await interaction.channel.setName(threadName.substring(0, threadName.indexOf('-assigned-')));
 		}
-		await interaction.channel.send(`Thread sent to backlog`);
 		ChangeThreadState(interaction.channel, 'backlog');
+
+		// return ephemeral message
+		await interaction.reply({ content: 'Thread sent to backlog', ephemeral: false });
 	},
 };

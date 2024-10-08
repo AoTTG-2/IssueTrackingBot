@@ -43,9 +43,12 @@ const GetThreadStateChange = (thread, desiredState) => {
     const newTags = thread.appliedTags.filter(tag => !states.find(state => state.id === tag));
     // Add the desired state
     newTags.push(states.find(state => state.state === desiredState).id);
+    return newTags;
 }
 
 const ChangeThreadState = (thread, desiredState) => {
+    if (!ThreadSupportsStates(thread))
+        return;
     const newTags = GetThreadStateChange(thread, desiredState);
     thread.setAppliedTags(newTags);
 }

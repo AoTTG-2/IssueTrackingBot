@@ -16,7 +16,7 @@ module.exports = {
 		 if (interaction.channel.archived) {
             await interaction.channel.setArchived(false);
         }
-		await interaction.channel.send(`${user.username} closed the thread`);
 		ChangeThreadState(interaction.channel, 'closed');
+		await interaction.reply({ content: `${user.username} closed the thread`, ephemeral: false });
 	},
 };

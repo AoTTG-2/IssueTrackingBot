@@ -13,8 +13,9 @@ module.exports = {
 		const source = interaction.options.getChannel('source') || interaction.channel;
 		const channel = interaction.options.getChannel('destination');
 		const reason = interaction.options.getString('reason') || 'No reason provided';
-		await interaction.channel.send(`Thread referenced to ${channel.name}`);
+		const user = interaction.user;
+		await channel.send(`${user} referenced ${source} with reason: ${reason}`);
 		// Send a message to the destination channel with a reference to the source channel
-		await channel.send(`Thread referenced from ${source.name} with reason: ${reason}`);
+		await interaction.reply({ content: `${user} referenced ${source} with reason: ${reason}`, ephemeral: false });
 	},
 };
