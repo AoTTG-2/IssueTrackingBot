@@ -11,12 +11,13 @@ module.exports = {
 	async execute(interaction) {
 		// Get the user who called the command
 		const user = interaction.options.getUser('user') || interaction.user;
+		const reason = interaction.options.getString('reason') || 'No reason provided';
 		// Set the tag of the thread to assigned
 		 // if thread is now archived, unarchive it
 		 if (interaction.channel.archived) {
             await interaction.channel.setArchived(false);
         }
 		ChangeThreadState(interaction.channel, 'closed');
-		await interaction.reply({ content: `${user.username} closed the thread`, ephemeral: false });
+		await interaction.reply({ content: `${user.username} closed the thread because: ${reason}`, ephemeral: false });
 	},
 };
