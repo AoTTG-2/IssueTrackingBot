@@ -10,6 +10,7 @@ const {
     pairCreatedThreadWithIssue,
     isChannelTracked
 } = require('../utility/util');
+const { ThreadSupportsStates, GetThreadStates, ChangeThreadState, ChannelSupportsStates, GetReadableStates } = require('../utility/discUtil');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -28,11 +29,9 @@ module.exports = {
             return;
         }
 
-        // Check that channel has the required tags Ready, Assigned, and Closed
-        const requiredTags = ['Ready', 'Assigned', 'Closed'];
-        const missingTags = requiredTags.filter(tag => !channel.availableTags.find(t => t.name === tag));
-        if (missingTags.length > 0) {
-            await interaction.reply({content: `The channel is missing the following tags: ${missingTags.join(', ')}`, ephemeral: true});
+        // Check that channel has the required thread states
+        if (!ChannelSupportsStates(channel)) {
+            await interaction.reply({content: `The channel is missing the following tags: ${GetReadableStates().join(', ')}`, ephemeral: true});
             return;
         }
 
@@ -47,11 +46,8 @@ module.exports = {
         }
         
         // Get all threads in channel
-        const threads = await channel.threads.fetch();
-        
-        // get the number of threads
+        const threads = await channel.threads.fetch();        
         const count = threads.threads.size;
-
         await interaction.reply({content: `Tracking ${channel.name} and backfilling ${count} threads.`, ephemeral: true});
 
         // Iterate through threads
@@ -60,8 +56,7 @@ module.exports = {
             if (threadObj.archived) {
                 continue;
             }
-            pairCreatedThreadWithIssue(threadObj);
-            // sleep a little while to avoid rate limiting
+            ChangeThreadState(threadObj, 'backlog');
             await new Promise(resolve => setTimeout(resolve, 2000));
         }
 	},

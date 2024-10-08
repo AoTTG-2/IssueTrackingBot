@@ -19,7 +19,7 @@ const {
     updateIssue,
     listIssueEvents,
 } = require('../utility/github.js');
-const threadCreate = require('./threadCreate.js');
+const threadCreate = require('../events/threadCreate.js');
 
 module.exports = {
 	name: Events.ThreadUpdate,

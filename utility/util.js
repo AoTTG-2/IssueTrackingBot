@@ -101,19 +101,9 @@ const pairCreatedThreadWithIssue = async (thread) => {
     const post = messages.first();
     if (!post) return;
 
-    // Get the tags on the thread, if its tagged as "Assigned", set state to assigned instead of ready, otherwise if tagged as Closed, dont create an issue.
-    const tags = thread.parent.availableTags;
-    const assignedTag = tags.find(tag => tag.name === "Assigned");
-    const closedTag = tags.find(tag => tag.name === "Closed");
-    if (thread.appliedTags.filter(t => t === closedTag.id).length > 0) return;
-
-    const projectState = thread.appliedTags.filter(t => t === assignedTag.id).length > 0 ? ProjectStates.InProgress : ProjectStates.Ready;
-
     // Filter for messages from the bot
     const botMessages = messages.filter(m => m.author.id === thread.client.user.id);
     let botMessage = botMessages.first();
-
-
 
     // already tracked
     if (botMessage) {
@@ -121,15 +111,15 @@ const pairCreatedThreadWithIssue = async (thread) => {
         if (botMessage.content.startsWith('Referenced Thread')) {
             // check if a second message exists
             if (botMessages.size > 1) {
+                // return ephemeral message to thread.interaction
+                thread.send('This thread is already paired with an issue');
                 return;
             }
         }
     }
-    console.log("Creating pair with issue");
 
     const createIssueResponse = await createIssue(process.env.OWNER, process.env.REPO, `${post.author.username}: ${thread.name}`, post.content);
     const addIssueToProjectResponse = await addIssueToProject(process.env.OWNER, process.env.REPO, process.env.PROJECT, createIssueResponse.node_id);
-    const setIssueStateResponse = await setIssueState(process.env.OWNER, process.env.REPO, process.env.PROJECT, addIssueToProjectResponse, projectState);
 
     // Create the github reference message for discord (used to reference the github case later)
     const githubReferenceComment = createGithubReference(createIssueResponse.number, createIssueResponse.node_id, addIssueToProjectResponse, createIssueResponse.html_url);
@@ -138,13 +128,6 @@ const pairCreatedThreadWithIssue = async (thread) => {
     // Create the discord thread reference message for github (used to reference the discord thread later)
     const discordReferenceComment = createDiscordReference(thread.parentId, thread.id, thread.url, addIssueToProjectResponse);
     const addIssueCommentResponse = await addIssueComment(process.env.OWNER, process.env.REPO, createIssueResponse.number, discordReferenceComment);
-
-    const tag = thread.parent.availableTags.find(tag => tag.name === "Ready");
-
-    if (tag && projectState === ProjectStates.Ready)
-    {
-        thread.setAppliedTags([tag.id]);
-    }
 }
 
 module.exports = {
